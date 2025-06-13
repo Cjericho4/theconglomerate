@@ -31,11 +31,11 @@ spec:
       snapshotterReplicaCount: 2
     persistence:
       defaultClass: true
-      defaultClassReplicaCount: 2
+      defaultClassReplicaCount: 1
     longhornUI:
-      replicas: 2
+      replicas: 1
     defaultSettings:
-      defaultReplicaCount: 2
+      defaultReplicaCount: 1
       defaultLonghornStaticStorageClass: longhorn
       orphanAutoDeletion: true
       concurrentAutomaticEngineUpgradePerNodeLimit: 3
