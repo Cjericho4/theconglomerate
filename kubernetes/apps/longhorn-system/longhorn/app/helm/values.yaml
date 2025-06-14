@@ -1,0 +1,79 @@
+---
+# Longhorn configuration for 2-node homelab
+defaultSettings:
+  # Single replica for homelab setup
+  defaultReplicaCount: 1
+  # Reduce CPU guarantees for homelab
+  guaranteedEngineManagerCPU: 0
+  guaranteedReplicaManagerCPU: 0
+  # Create default disk on labeled nodes
+  createDefaultDiskLabeledNodes: true
+  # Default data path
+  defaultDataPath: /var/lib/longhorn
+  # Disable soft anti-affinity (not needed with 1 replica)
+  replicaSoftAntiAffinity: false
+  # Safety setting - require confirmation for deletions
+  deleteConfirmationFlag: true
+  # Backup settings (disabled for now)
+  backupTarget: ""
+  # Storage class settings
+  defaultLonghornStaticStorageClass: longhorn
+  # Node drain policy
+  nodeDownPodDeletionPolicy: delete-both-statefulset-and-deployment-pod
+
+# Longhorn Manager resource limits
+longhornManager:
+  resources:
+    limits:
+      cpu: 200m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 256Mi
+
+# Longhorn Driver resource limits
+longhornDriver:
+  resources:
+    limits:
+      cpu: 100m
+      memory: 256Mi
+    requests:
+      cpu: 50m
+      memory: 128Mi
+
+# Longhorn UI resource limits
+longhornUI:
+  resources:
+    limits:
+      cpu: 50m
+      memory: 128Mi
+    requests:
+      cpu: 25m
+      memory: 64Mi
+
+# CSI Plugin resource limits
+csi:
+  attacherReplicaCount: 1
+  provisionerReplicaCount: 1
+  resizerReplicaCount: 1
+  snapshotterReplicaCount: 1
+
+# Service configuration
+service:
+  ui:
+    type: ClusterIP
+  manager:
+    type: ClusterIP
+
+# Disable ingress (we'll use Gateway API)
+ingress:
+  enabled: false
+
+# Tolerations for system nodes (if needed)
+tolerations: []
+
+# Node selector (empty to run on all nodes)
+nodeSelector: {}
+
+# Annotations
+annotations: {}
